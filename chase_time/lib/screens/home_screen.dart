@@ -159,7 +159,7 @@ class HomeScreen extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Get.textTheme.bodyLarge?.copyWith(
-              fontSize: 20,
+              fontSize: 16,
               color: Colors.black,
             ),
           ),
@@ -171,7 +171,7 @@ class HomeScreen extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Get.textTheme.bodyLarge?.copyWith(
-              fontSize: 20,
+              fontSize: 16,
               color: Colors.black,
             ),
           ),
@@ -205,7 +205,7 @@ class HomeScreen extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         style: Get.textTheme.bodyLarge?.copyWith(
           color: Colors.red,
-          fontSize: 24,
+          fontSize: 18,
         ),
       );
     }
@@ -234,13 +234,13 @@ class HomeScreen extends StatelessWidget {
                     TextSpan(
                       text: secLeft.toString(),
                       style: Get.textTheme.bodyLarge?.copyWith(
-                        fontSize: 36,
+                        fontSize: 14,
                       ),
                     ),
                     TextSpan(
                       text: " s",
                       style: Get.textTheme.bodyLarge?.copyWith(
-                        fontSize: 24,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -286,7 +286,7 @@ class HomeScreen extends StatelessWidget {
                   "Chasing time in sec!",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Get.textTheme.bodyLarge?.copyWith(fontSize: 36),
+                  style: Get.textTheme.bodyLarge?.copyWith(fontSize: 18),
                 ).padAll(value: 12),
               ),
             ),

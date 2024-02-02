@@ -85,7 +85,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
           Text(
             "Catch me if you can!",
             style: Get.textTheme.bodyLarge?.copyWith(
-              fontSize: 48,
+              fontSize: 24,
             ),
           ),
         ],
