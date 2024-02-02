@@ -1,16 +1,26 @@
-# chase_time
+# chase_time | A game to chase second within 5 second time frame
 
-A new Flutter project.
+##  Tech Stack
+  ```
+    * Dart
+    * Flutter
+  ```
 
-## Getting Started
+##  Installation
 
-This project is a starting point for a Flutter application.
+<a href="https://github.com/ajayg51/kjbn_assignment/raw/main/app-contents/app-release.apk">Click here to download android apk</a>
 
-A few resources to get you started if this is your first Flutter project:
+## Problem Statement
+![Screenshot 2024-02-03 at 1 52 21 AM](https://github.com/ajayg51/kjbn_assignment/assets/60037249/52c118de-0105-4338-b7e3-8fc562788aa4)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Screenshot 2024-02-03 at 1 52 43 AM](https://github.com/ajayg51/kjbn_assignment/assets/60037249/f4a2b1d9-a6c1-4168-9773-51a462a48948)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+##  Demo Video
+
+
+## Features
+```
+  * Splash screen navigates to Home screen after 3 seconds
+
+```
+
