@@ -30,35 +30,58 @@ class HomeScreen extends StatelessWidget {
                         48.verticalSpace,
                         Obx(
                           () {
+                            final successCount = controller.successCount.value;
+                            final failureCount = controller.failureCount.value;
                             final attemptCount = controller.attemptCount.value;
+
                             final isSuccess = controller.isSuccess.value;
                             final isTimeup = controller.isTimeup.value;
-
                             final secLeft = controller.timerSecond.value;
 
-                            // case failure
-                            String label = "Sorry try again!";
-                            String info = "Attempts : $attemptCount";
-                            int colorValue = ColorConsts.orange;
+                            const tryAgainLabel = "Let's chase time in second";
+                            final tryAgaininfo = "Attempts : $attemptCount";
+                            const tryAgainColorValue = ColorConsts.orange;
 
-                            // case success
-                            if (isSuccess) {
-                              label = "Success :)";
-                              info = "Score : 1/$attemptCount";
-                              colorValue = ColorConsts.green;
-                            }
-                            // case timeup
-                            else if (isTimeup) {
-                              label = "Failure :(";
-                              colorValue = ColorConsts.red;
-                            }
+                            const successLabel = "Success :)";
+                            final successInfo =
+                                "Score : $successCount/$attemptCount";
+                            const successColorValue = ColorConsts.green;
+
+                            const failureLabel = "Failure :(";
+                            final failureInfo =
+                                "Score : $failureCount/$attemptCount";
+                            const failureColorValue = ColorConsts.red;
 
                             return Column(
                               children: [
-                                buildResultInfo(
-                                  label: label,
-                                  info: info,
-                                  colorValue: colorValue,
+                                Row(
+                                  children: [
+                                    if (isSuccess || isTimeup) ...[
+                                      Expanded(
+                                        child: buildResultInfo(
+                                          label: failureLabel,
+                                          info: failureInfo,
+                                          colorValue: failureColorValue,
+                                        ),
+                                      ),
+                                      6.horizontalSpace,
+                                      Expanded(
+                                        child: buildResultInfo(
+                                          label: successLabel,
+                                          info: successInfo,
+                                          colorValue: successColorValue,
+                                        ),
+                                      ),
+                                    ] else ...[
+                                      Expanded(
+                                        child: buildResultInfo(
+                                          label: tryAgainLabel,
+                                          info: tryAgaininfo,
+                                          colorValue: tryAgainColorValue,
+                                        ),
+                                      ),
+                                    ]
+                                  ],
                                 ).padSymmetric(horizontalPad: 12),
                                 48.verticalSpace,
                                 buildTimer(secLeft: secLeft),
@@ -115,16 +138,10 @@ class HomeScreen extends StatelessWidget {
     required String info,
     required int colorValue,
   }) {
-    return Row(
-      children: [
-        Expanded(
-          child: buildTileInfo(
-            colorValue: colorValue,
-            label: label,
-            info: info,
-          ),
-        ),
-      ],
+    return buildTileInfo(
+      colorValue: colorValue,
+      label: label,
+      info: info,
     );
   }
 
@@ -139,6 +156,8 @@ class HomeScreen extends StatelessWidget {
         children: [
           Text(
             label,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: Get.textTheme.bodyLarge?.copyWith(
               fontSize: 20,
               color: Colors.black,
@@ -149,6 +168,8 @@ class HomeScreen extends StatelessWidget {
           6.verticalSpace,
           Text(
             info,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: Get.textTheme.bodyLarge?.copyWith(
               fontSize: 20,
               color: Colors.black,
@@ -176,6 +197,19 @@ class HomeScreen extends StatelessWidget {
   Widget buildTimer({
     required int secLeft,
   }) {
+    if (secLeft < 0) {
+      controller.restartGame();
+      return Text(
+        "Timer got negative value",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: Get.textTheme.bodyLarge?.copyWith(
+          color: Colors.red,
+          fontSize: 24,
+        ),
+      );
+    }
+
     Color color = Colors.green;
     if (secLeft < 5 && secLeft >= 3) {
       color = Colors.yellow;
@@ -249,7 +283,9 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "Chase!",
+                  "Chasing time in sec!",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: Get.textTheme.bodyLarge?.copyWith(fontSize: 36),
                 ).padAll(value: 12),
               ),

@@ -7,15 +7,18 @@ import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 class HomeScreenController extends GetxController {
   final currentSecond = 0.obs;
   final randomValue = 0.obs;
+
+  final successCount = 0.obs;
+  final failureCount = 0.obs;
+
   final attemptCount = 0.obs;
   final timerSecond = 5.obs;
 
-  final isRestartGame = false.obs;
   final isSuccess = false.obs;
   final isTimeup = false.obs;
 
   Timer? timer;
-  final debouncer = Debouncer(delay: const Duration(milliseconds: 1010));
+  final debouncer = Debouncer(delay: const Duration(milliseconds: 700));
 
   @override
   void onReady() {
@@ -24,15 +27,35 @@ class HomeScreenController extends GetxController {
     countSecond(isStopTimer: false);
   }
 
+  void restartGame() {
+    currentSecond.value = 0;
+    randomValue.value = 0;
+
+    successCount.value = 0;
+    failureCount.value = 0;
+
+    attemptCount.value = 0;
+    timerSecond.value = 5;
+
+    isSuccess.value = false;
+    isTimeup.value = false;
+  }
+
   void onBtnTap() {
-    if (timer != null && timer!.isActive) {
-      timer!.cancel();
-    }
     debouncer.call(() {
+      if (timerSecond.value < 0) {
+        if (timer != null && timer!.isActive) {
+          timer!.cancel();
+        }
+        return;
+      }
+
+      if (timer != null && timer!.isActive) {
+        timer!.cancel();
+      }
+
       currentSecond.value = DateTime.now().second;
       randomValue.value = Random().nextInt(60);
-      // currentSecond.value = 1;
-      // randomValue.value = 1;
       timerSecond.value = 5;
 
       attemptCount.value += 1;
@@ -41,13 +64,15 @@ class HomeScreenController extends GetxController {
         if (timer != null && timer!.isActive) {
           timer!.cancel();
         }
+
+        successCount.value += 1;
         isSuccess.value = true;
       } else {
         if (timer != null && timer!.isActive) {
           timer!.cancel();
         }
+
         countSecond(isStopTimer: false);
-        isRestartGame.value = true;
       }
     });
   }
@@ -69,10 +94,15 @@ class HomeScreenController extends GetxController {
         timerSecond.value -= 1;
         if (timerSecond.value == 0) {
           isSuccess.value = false;
+          failureCount.value += 1;
           isTimeup.value = true;
           timer.cancel();
         }
       },
     );
+  }
+
+  void onRestart() {
+    isSuccess.value = false;
   }
 }
