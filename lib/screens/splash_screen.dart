@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+import 'package:kjbn_assignment/screens/splash_screen_controller.dart';
 import 'package:kjbn_assignment/utils/assets.dart';
 import 'package:kjbn_assignment/utils/common_appbar.dart';
 import 'package:kjbn_assignment/utils/common_scaffold.dart';
 import 'package:kjbn_assignment/utils/extensions.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  SplashScreen({super.key});
+  final controller = Get.put(SplashScreenController());
   @override
   Widget build(BuildContext context) {
     return CommonScaffold(
@@ -49,8 +51,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
     )..repeat(reverse: true);
 
     sizeAnimation =
-        Tween<double>(begin: 50, end: 600)
-        .animate(animationController);
+        Tween<double>(begin: 50, end: 600).animate(animationController);
   }
 
   @override
@@ -67,15 +68,13 @@ class _AnimatedLogoState extends State<AnimatedLogo>
         children: [
           Container(
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
                   Colors.transparent,
                   Colors.white.withOpacity(0.3),
-                ]
-              )
-            ),
+                ])),
             child: Image.asset(
               Assets.logo,
               width: sizeAnimation.value,
