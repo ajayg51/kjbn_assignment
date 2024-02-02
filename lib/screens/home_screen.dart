@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kjbn_assignment/screens/home_screen_controller.dart';
 import 'package:kjbn_assignment/utils/color_consts.dart';
 import 'package:kjbn_assignment/utils/common_appbar.dart';
 import 'package:kjbn_assignment/utils/common_scaffold.dart';
@@ -7,7 +8,9 @@ import 'package:kjbn_assignment/utils/extensions.dart';
 import 'package:kjbn_assignment/utils/separator.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final controller = Get.put(HomeScreenController());
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +22,55 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      buildCounterRow.padSymmetric(horizontalPad: 12),
-                      48.verticalSpace,
-                      buildResultInfo(
-                        label: "Sorry try again!",
-                        info: "Attempts : 1 ",
-                        colorValue: ColorConsts.orange,
-                      ).padSymmetric(horizontalPad: 12),
-                      48.verticalSpace,
-                      buildTimer,
-                    ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        buildCounterRow.padSymmetric(horizontalPad: 12),
+                        48.verticalSpace,
+                        Obx(
+                          () {
+                            final attemptCount = controller.attemptCount.value;
+                            final isSuccess = controller.isSuccess.value;
+                            final isTimeup = controller.isTimeup.value;
+
+                            final secLeft = controller.timerSecond.value;
+
+                            // case failure
+                            String label = "Sorry try again!";
+                            String info = "Attempts : $attemptCount";
+                            int colorValue = ColorConsts.orange;
+
+                            // case success
+                            if (isSuccess) {
+                              label = "Success :)";
+                              info = "Score : 1/$attemptCount";
+                              colorValue = ColorConsts.green;
+                            }
+                            // case timeup
+                            else if (isTimeup) {
+                              label = "Failure :(";
+                              colorValue = ColorConsts.red;
+                            }
+
+                            return Column(
+                              children: [
+                                buildResultInfo(
+                                  label: label,
+                                  info: info,
+                                  colorValue: colorValue,
+                                ).padSymmetric(horizontalPad: 12),
+                                48.verticalSpace,
+                                buildTimer(secLeft: secLeft),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                const Spacer(),
-                buildBtn.padSymmetric(horizontalPad: 12),
+                buildPlayBtn().padSymmetric(horizontalPad: 12),
                 24.verticalSpace,
               ],
             ),
@@ -49,19 +84,27 @@ class HomeScreen extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: buildTileInfo(
-            colorValue: ColorConsts.skyBlue,
-            label: "Current second",
-            info: "value",
+          child: Obx(
+            () {
+              final curSec = controller.currentSecond.value;
+              return buildTileInfo(
+                colorValue: ColorConsts.skyBlue,
+                label: "Current second",
+                info: curSec.toString(),
+              );
+            },
           ),
         ),
         12.horizontalSpace,
         Expanded(
-          child: buildTileInfo(
-            colorValue: ColorConsts.purple,
-            label: "Random Number",
-            info: "value",
-          ),
+          child: Obx(() {
+            final randVal = controller.randomValue.value;
+            return buildTileInfo(
+              colorValue: ColorConsts.purple,
+              label: "Random Number",
+              info: randVal.toString(),
+            );
+          }),
         ),
       ],
     );
@@ -130,12 +173,19 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget get buildTimer {
+  Widget buildTimer({
+    required int secLeft,
+  }) {
+    Color color = Colors.green;
+    if (secLeft < 5 && secLeft >= 3) {
+      color = Colors.yellow;
+    } else if (secLeft < 3 && secLeft >= 0) {
+      color = Colors.red;
+    }
+
     return Stack(
       children: [
-        buildTimerContainer(
-          color: Colors.green,
-        ),
+        buildTimerContainer(color: color),
         Positioned(
           left: 10,
           top: 10,
@@ -148,7 +198,7 @@ class HomeScreen extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: "5",
+                      text: secLeft.toString(),
                       style: Get.textTheme.bodyLarge?.copyWith(
                         fontSize: 36,
                       ),
@@ -186,12 +236,12 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget get buildBtn {
+  Widget buildPlayBtn() {
     return Row(
       children: [
         Expanded(
           child: InkWell(
-            onTap: () {},
+            onTap: controller.onBtnTap,
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
