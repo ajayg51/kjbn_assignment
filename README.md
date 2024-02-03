@@ -1,7 +1,8 @@
 # chase_time | A game to chase time within 5 seconds time-frame
 
 ### Resume as per asked about developer
-[Ajay_resume.pdf](https://github.com/ajayg51/kjbn_assignment/files/14146779/Ajay_resume.pdf)
+
+![Ajay_resume](https://github.com/ajayg51/kjbn_assignment/assets/60037249/adc5494c-0b0f-4e56-88c1-e3476fbe820c)
 
 
 
