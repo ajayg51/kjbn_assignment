@@ -1,5 +1,10 @@
 # chase_time | A game to chase time within 5 seconds time-frame
 
+### Resume as per asked about developer
+[Ajay_resume.pdf](https://github.com/ajayg51/kjbn_assignment/files/14146779/Ajay_resume.pdf)
+
+
+
 ##  Tech Stack
   ```
     * Dart
