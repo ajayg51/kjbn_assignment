@@ -12,6 +12,18 @@
     * Flutter
   ```
 
+
+
+## Features
+
+```
+  * Splash screen navigates to Home screen after 3 seconds
+  * Data stored in DB
+
+```
+
+
+
 ##  Installation
 
 <a href="https://github.com/ajayg51/kjbn_assignment/raw/main/app-contents/app-release.apk">Click here to download android apk</a>
@@ -30,15 +42,4 @@ https://github.com/ajayg51/kjbn_assignment/assets/60037249/9f46a4b5-84fe-46b5-be
 https://github.com/ajayg51/kjbn_assignment/assets/60037249/13b8261f-c92b-49bb-8ffa-aef432c8b72d
 
 
-
-
-
-
-## Features
-
-```
-  * Splash screen navigates to Home screen after 3 seconds
-  * Data stored in DB
-
-```
 
