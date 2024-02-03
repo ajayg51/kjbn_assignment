@@ -32,6 +32,7 @@ https://github.com/ajayg51/kjbn_assignment/assets/60037249/13b8261f-c92b-49bb-8f
 
 ```
   * Splash screen navigates to Home screen after 3 seconds
+  * Data stored in DB
 
 ```
 
