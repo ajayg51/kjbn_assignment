@@ -1,4 +1,4 @@
-# chase_time | A game to chase second within 5 second time frame
+# chase_time | A game to chase time within 5 seconds time-frame
 
 ##  Tech Stack
   ```
@@ -16,9 +16,20 @@
 ![Screenshot 2024-02-03 at 1 52 43 AM](https://github.com/ajayg51/kjbn_assignment/assets/60037249/f4a2b1d9-a6c1-4168-9773-51a462a48948)
 
 ##  Demo Video
+### android Demo
+https://github.com/ajayg51/kjbn_assignment/assets/60037249/9f46a4b5-84fe-46b5-be1a-208d4d8e756e
+
+### iOS simulator Demo
+
+https://github.com/ajayg51/kjbn_assignment/assets/60037249/13b8261f-c92b-49bb-8ffa-aef432c8b72d
+
+
+
+
 
 
 ## Features
+
 ```
   * Splash screen navigates to Home screen after 3 seconds
 
