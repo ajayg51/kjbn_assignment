@@ -30,15 +30,19 @@ class HomeScreen extends StatelessWidget {
                         48.verticalSpace,
                         Obx(
                           () {
+                            final dbData = controller.data;
+                            final dbErr = controller.dbErr.value;
                             final successCount = controller.successCount.value;
                             final failureCount = controller.failureCount.value;
+                            final timeupCount = controller.timeupCount.value;
                             final attemptCount = controller.attemptCount.value;
 
-                            final isSuccess = controller.isSuccess.value;
+                            final isShowGameInfo =
+                                controller.isShowGameInfo.value;
                             final isTimeup = controller.isTimeup.value;
                             final secLeft = controller.timerSecond.value;
 
-                            const tryAgainLabel = "Let's chase time in second";
+                            const tryAgainLabel = "Let's chase time";
                             final tryAgaininfo = "Attempts : $attemptCount";
                             const tryAgainColorValue = ColorConsts.orange;
 
@@ -52,11 +56,41 @@ class HomeScreen extends StatelessWidget {
                                 "Score : $failureCount/$attemptCount";
                             const failureColorValue = ColorConsts.red;
 
+                            const timeupLabel = "Time-up :(";
+                            final timeupInfo = "Time-up count : $timeupCount";
+                            const timeupColorValue = ColorConsts.red;
+
+                            if (dbData.isNotEmpty) {
+                              controller.showSnackbar(
+                                msg: "Data found in DB",
+                              );
+                            } else {
+                              controller.showSnackbar(msg: "Something went wrong!");
+                            }
+
                             return Column(
                               children: [
+                                // if (dbData.isNotEmpty) ...[
+                                //   Text(
+                                //     // "data added successfully in DB",
+                                //     dbData.toString(),
+                                //     style: Get.textTheme.bodyLarge?.copyWith(
+                                //       fontSize: 12,
+                                //     ),
+                                //   ),
+                                // ] else ...[
+                                //   if (dbErr.isNotEmpty) ...[
+                                //     Text(
+                                //       "Error : $dbErr",
+                                //       style: Get.textTheme.bodyLarge?.copyWith(
+                                //         fontSize: 12,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ],
                                 Row(
                                   children: [
-                                    if (isSuccess || isTimeup) ...[
+                                    if (!isShowGameInfo) ...[
                                       Expanded(
                                         child: buildResultInfo(
                                           label: failureLabel,
@@ -83,6 +117,20 @@ class HomeScreen extends StatelessWidget {
                                     ]
                                   ],
                                 ).padSymmetric(horizontalPad: 12),
+                                if (isTimeup) ...[
+                                  12.verticalSpace,
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: buildResultInfo(
+                                          label: timeupLabel,
+                                          info: timeupInfo,
+                                          colorValue: timeupColorValue,
+                                        ),
+                                      ),
+                                    ],
+                                  ).padSymmetric(horizontalPad: 12),
+                                ],
                                 48.verticalSpace,
                                 buildTimer(secLeft: secLeft),
                               ],
@@ -198,7 +246,7 @@ class HomeScreen extends StatelessWidget {
     required int secLeft,
   }) {
     if (secLeft < 0) {
-      controller.restartGame();
+      controller.resetGameInfo();
       return Text(
         "Timer got negative value",
         maxLines: 1,
@@ -283,7 +331,7 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  "Chasing time in sec!",
+                  "Chase time!",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Get.textTheme.bodyLarge?.copyWith(fontSize: 18),
